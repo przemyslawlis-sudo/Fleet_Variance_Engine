@@ -11,5 +11,5 @@ def get_latest_budget(dir_data = "data"):
     # defensive check: ensuring I have two files needed for variance
     if len(files) < 2:
         raise FileNotFoundError(f"Insuficent files in {dir_data}. Need at least 2")
-    return files
+    return files[-2:]
 
