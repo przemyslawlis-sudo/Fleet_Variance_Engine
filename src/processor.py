@@ -6,10 +6,11 @@ import glob
 def get_latest_budget(dir_data = "data"):
     # glob search data folder for any CSV files
     # os.path.join handles slashes correctly based on os
-    files = glob.glob(os.path.join(dir_data,"*.csv"))
+    # the green fix: sorting files chronogically
+    files = sorted(glob.glob(os.path.join(dir_data,"*.csv")))
 
     # defensive check: ensuring I have two files needed for variance
     if len(files) < 2:
-        raise FileNotFoundError(f"Insuficent files in {dir_data}. Need at least 2")
+        raise FileNotFoundError(f"Insufficient files in {dir_data}. Need at least 2")
     return files[-2:]
 
