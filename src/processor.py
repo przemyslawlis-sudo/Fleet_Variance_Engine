@@ -43,6 +43,9 @@ def process_variance(dir_path="data"):
     # Merging and Calculation
     combined = pd.merge(df_old_long,df_new_long,on=['Location','Week_No'])
 
+    # Green: Math
+    combined['Variance'] = combined['KPI_New']-combined['KPI_Old']
+    combined['%Variance'] = (combined['Variance']/combined['KPI_Old']) * 100
 
     combined.to_csv("output/variance.csv", index=False)
     
