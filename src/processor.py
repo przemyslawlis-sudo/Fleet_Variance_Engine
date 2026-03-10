@@ -52,11 +52,19 @@ def process_variance(dir_path="data"):
     pivot_var = combined.pivot_table(index='Location', columns='Week_No', values='Variance', aggfunc='sum', margins=True)
     pivot_pct = combined.pivot_table(index='Location', columns='Week_No', values='%Variance', aggfunc='mean', margins=True)
 
+
     pivot_pct = pivot_pct.round(2).fillna(0)
 
     pivot_var.to_csv("output/variance.csv")
     pivot_pct.to_csv("output/variance_percentage.csv")
 
-    return combined
-process_variance()
+    # Create a dictionary to hold all results
+    results = {
+    "data": combined,
+    "variance_pivot": pivot_var,
+    "pct_pivot": pivot_pct
+    }
+
+    return results
+
 
