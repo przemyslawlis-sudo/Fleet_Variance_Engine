@@ -45,10 +45,15 @@ def process_variance(dir_path="data"):
 
     # Green: Math
     combined['Variance'] = combined['KPI_New']-combined['KPI_Old']
+    # Refactor: For precision round()
     combined['%Variance'] = round((combined['Variance']/combined['KPI_Old']) * 100,2)
 
-    combined.to_csv("output/variance.csv", index=False)
     
-    return combined
+    # Create a dictionary to hold all results
+    results = {
+    "data": combined,
+    }
+
+    return results
 
 

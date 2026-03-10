@@ -91,3 +91,16 @@ def test_variance_calculation_accuracy(tmp_path):
     
     # Check percentage variance: (20 / 100) * 100 = 20.0
     assert df_result.loc[0,'%Variance'] == 20.0
+
+def test_pivot_export_integrity(tmp_path):
+    # Setup data in a mock folder
+    data_dir = tmp_path / "export_test"
+    data_dir.mkdir()
+    (data_dir / "budget_v1.csv").write_text("Week,1\nAltens,100")
+    (data_dir / "budget_v2.csv").write_text("Week,1\nAltens,120")
+
+    # Action
+    process_variance(str(data_dir))
+
+    # Assert: 
+    assert os.path.exists("output/variance.csv")
