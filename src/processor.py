@@ -26,6 +26,10 @@ def process_variance(dir_path="data"):
     # Load data
     df_old = pd.read_csv(old_file)
     df_new = pd.read_csv(new_file)
+
+    # Green Phase: renaming first column from Week to Location
+    df_old = df_old.rename(columns={'Week':'Location'})
+    df_new = df_new.rename(columns={'Week':'Location'})
     
     # Save output (Optional: you could also parameterise the output path!)
     df_new.to_csv("output/new.csv", index=False)
