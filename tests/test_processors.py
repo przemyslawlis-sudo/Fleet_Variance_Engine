@@ -68,3 +68,26 @@ def test_process_variance_first_row_and_column_integrity(tmp_path):
     # Assert
     assert df_result.iloc[0,0] == "Altens"
     assert str(df_result.iloc[0,1]) == "1"
+
+
+def test_variance_calculation_accuracy(tmp_path):
+    # Setup
+    data_dir = tmp_path / "calc_test"
+    data_dir.mkdir()
+    
+    # 100 (Old) and 120 (New)
+    csv_old = "Week,1\nAltens,100"
+    csv_new = "Week,1\nAltens,120"
+    
+    (data_dir / "budget_v1.csv").write_text(csv_old)
+    (data_dir / "budget_v2.csv").write_text(csv_new)
+
+    # Action
+    df_result = process_variance(str(data_dir))
+
+    # Assert
+    # Check absolute variance: 120 - 100 = 20
+    assert df_result.loc[0,'Variance'] == 20
+    
+    # Check percentage variance: (20 / 100) * 100 = 20.0
+    assert df_result.loc[0,'%Variance'] == 20.0

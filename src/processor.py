@@ -40,7 +40,12 @@ def process_variance(dir_path="data"):
     df_old_long["Week_No"] = df_old_long["Week_No"].astype(int)
     df_new_long["Week_No"] = df_new_long["Week_No"].astype(int)
         
+    # Merging and Calculation
+    combined = pd.merge(df_old_long,df_new_long,on=['Location','Week_No'])
 
-    df_old_long.to_csv("output/new.csv", index=False)
+
+    combined.to_csv("output/variance.csv", index=False)
     
-    return df_new_long
+    return combined
+
+
