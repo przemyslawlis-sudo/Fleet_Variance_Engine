@@ -48,12 +48,13 @@ def process_variance(dir_path="data"):
     # Refactor: For precision round()
     combined['%Variance'] = round((combined['Variance']/combined['KPI_Old']) * 100,2)
 
-    
-    # Create a dictionary to hold all results
-    results = {
-    "data": combined,
-    }
+    # Pivoting and Exporting
+    pivot_var = combined.pivot_table(index='Location', columns='Week_No', values='Variance', aggfunc='sum', margins=True)
+    pivot_pct = combined.pivot_table(index='Location', columns='Week_No', values='%Variance', aggfunc='mean', margins=True)
 
-    return results
+    pivot_var.to_csv("output/variance.csv")
+    pivot_pct.to_csv("output/variance_percentage.csv")
 
+    return combined
+process_variance()
 
