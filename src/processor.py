@@ -37,7 +37,7 @@ def process_variance(dir_path="data"):
     df_new_long = df_new.melt(id_vars="Location",var_name="Week_No",value_name="KPI_New")
 
         
-    # Save output (Optional: you could also parameterise the output path!)
+
     df_old_long.to_csv("output/new.csv", index=False)
     
-    return df_new
+    return df_new_long
