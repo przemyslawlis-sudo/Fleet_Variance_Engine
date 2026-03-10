@@ -2,6 +2,8 @@ import pytest
 import os
 # Import processor.py and get_latest_budget function.
 from src.processor import get_latest_budget
+# Import process_variance function
+from src.processor import process_variance
 
 # Test 1.
 # Code must crash if one file is at present. 
@@ -29,8 +31,27 @@ def test_get_latest_budget_sorted_files (tmp_path):
     result = get_latest_budget(str(d))
     # Assertions I insist that index 0 is v1
     # If glob returns them in the order they were created (v2, then v1), 
-    # this will FAIL unless you have .sorted() in your code.
+    # this will FAIL.
 
     assert len(result) == 2
     assert result[0].endswith("budget_v1_20260101.csv")
     assert result[1].endswith("budget_v2_20260201.csv")
+
+
+from src.processor import process_variance
+
+def test_first_row_and_column_integrity(tmp_path):
+    # 1. Arrange: Create the temp folder and files
+    data_dir = tmp_path / "test_data"
+    data_dir.mkdir()
+    
+    csv_content = "Week,1,2\nAltens,100,110\nArnold,200,210"
+    (data_dir / "budget_v1.csv").write_text(csv_content)
+    (data_dir / "budget_v2.csv").write_text(csv_content)
+
+    # 2. Act: Pass the temp directory path into your function
+    df_result = process_variance(str(data_dir))
+
+    # 3. Assert: Check the results
+    assert df_result.columns[0] == "Location"
+    assert df_result.iloc[0, 0] == "Altens"
