@@ -30,9 +30,14 @@ def process_variance(dir_path="data"):
     # Green Phase: renaming first column from Week to Location
     df_old = df_old.rename(columns={'Week':'Location'})
     df_new = df_new.rename(columns={'Week':'Location'})
-    
+
+    # Transforming from Wide to Long
+
+    df_old_long = df_old.melt(id_vars="Location",var_name="Week_No",value_name="KPI_Old")
+    df_new_long = df_new.melt(id_vars="Location",var_name="Week_No",value_name="KPI_New")
+
+        
     # Save output (Optional: you could also parameterise the output path!)
-    df_new.to_csv("output/new.csv", index=False)
+    df_old_long.to_csv("output/new.csv", index=False)
     
     return df_new
-

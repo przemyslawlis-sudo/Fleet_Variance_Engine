@@ -40,7 +40,7 @@ def test_get_latest_budget_sorted_files (tmp_path):
 
 from src.processor import process_variance
 
-def test_first_row_and_column_integrity(tmp_path):
+def test_process_variance_column_integrity(tmp_path):
     # 1. Arrange: Create the temp folder and files
     data_dir = tmp_path / "test_data"
     data_dir.mkdir()
@@ -55,3 +55,16 @@ def test_first_row_and_column_integrity(tmp_path):
     # 3. Assert: Check the results
     assert df_result.columns[0] == "Location"
     assert df_result.iloc[0, 0] == "Altens"
+
+def test_process_variance_first_row_and_column_integrity(tmp_path):
+    # Setup
+    data_dir = tmp_path / "test_data"
+    data_dir.mkdir()
+    csv_content = "Week,1\nAltens,100"
+    (data_dir / "budget_v1.csv").write_text(csv_content)
+    (data_dir / "budget_v2.csv").write_text(csv_content)
+    # Action
+    df_result = process_variance(str(data_dir))
+    # Assert
+    assert df_result.iloc[0,0] == "Altens"
+    assert str(df_result.iloc[0,1]) == "1"
