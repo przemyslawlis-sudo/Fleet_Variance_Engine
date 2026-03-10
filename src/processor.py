@@ -45,7 +45,7 @@ def process_variance(dir_path="data"):
 
     # Green: Math
     combined['Variance'] = combined['KPI_New']-combined['KPI_Old']
-    combined['%Variance'] = (combined['Variance']/combined['KPI_Old']) * 100
+    combined['%Variance'] = round((combined['Variance']/combined['KPI_Old']) * 100,2)
 
     combined.to_csv("output/variance.csv", index=False)
     
