@@ -35,7 +35,10 @@ def process_variance(dir_path="data"):
 
     df_old_long = df_old.melt(id_vars="Location",var_name="Week_No",value_name="KPI_Old")
     df_new_long = df_new.melt(id_vars="Location",var_name="Week_No",value_name="KPI_New")
-
+    
+    # Refactor: explicitly convert the column type 
+    df_old_long["Week_No"] = df_old_long["Week_No"].astype(int)
+    df_new_long["Week_No"] = df_new_long["Week_No"].astype(int)
         
 
     df_old_long.to_csv("output/new.csv", index=False)
