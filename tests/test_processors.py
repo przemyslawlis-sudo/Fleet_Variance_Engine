@@ -53,8 +53,8 @@ def test_process_variance_column_integrity(tmp_path):
     df_result = process_variance(str(data_dir))
 
     # 3. Assert: Check the results
-    assert df_result.columns[0] == "Location"
-    assert df_result.iloc[0, 0] == "Altens"
+    assert df_result["data"].columns[0] == "Location"
+    assert df_result["data"].iloc[0, 0] == "Altens"
 
 def test_process_variance_first_row_and_column_integrity(tmp_path):
     # Setup
@@ -66,8 +66,8 @@ def test_process_variance_first_row_and_column_integrity(tmp_path):
     # Action
     df_result = process_variance(str(data_dir))
     # Assert
-    assert df_result.iloc[0,0] == "Altens"
-    assert str(df_result.iloc[0,1]) == "1"
+    assert df_result["data"].iloc[0,0] == "Altens"
+    assert str(df_result["data"].iloc[0,1]) == "1"
 
 
 def test_variance_calculation_accuracy(tmp_path):
@@ -87,10 +87,10 @@ def test_variance_calculation_accuracy(tmp_path):
 
     # Assert
     # Check absolute variance: 120 - 100 = 20
-    assert df_result.loc[0,'Variance'] == 20
+    assert df_result["data"].loc[0,'Variance'] == 20
     
     # Check percentage variance: (20 / 100) * 100 = 20.0
-    assert df_result.loc[0,'%Variance'] == 20.0
+    assert df_result["data"].loc[0,'%Variance'] == 20.0
 
 def test_pivot_export_integrity(tmp_path):
     # Setup data in a mock folder
